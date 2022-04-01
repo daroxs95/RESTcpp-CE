@@ -1,0 +1,3 @@
+[submodule "collector"]
+	path = collector
+	url = https://github.com/PotatoBite/collector
