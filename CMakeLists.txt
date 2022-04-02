@@ -10,14 +10,42 @@ enable_testing()
 
 set (CMAKE_CXX_STANDARD 17)
 
-add_executable(myapp "src/main.cpp" )
 
-# collect( "https://github.com/open-source-parsers/jsoncpp" "1.9.4" myapp)
+
+
+add_executable(myapp 
+"src/main.cpp"
+"src/service/UserService.cpp"
+)
+
 collect( "https://github.com/PotatoBite/xgetopt" "v1.0.0" myapp)
 collect( "https://github.com/oatpp/oatpp" "1.3.0" myapp)
+collect( "https://github.com/oatpp/oatpp-swagger" "1.3.0" myapp)
+
+set(OATPP_SQLITE_AMALGAMATION ON)
+append_var_to_cmake_args( OATPP_SQLITE_AMALGAMATION )
+collect( "https://github.com/oatpp/oatpp-sqlite" "1.3.0" myapp)
+
+
+add_definitions(
+        -DOATPP_SWAGGER_RES_PATH="${_oatpp_DIR}/include/oatpp-1.3.0/bin/oatpp-swagger/res"
+
+        ## SQLite database file
+        -DDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/db.sqlite"
+        ## SQLite database test file
+        -DTESTDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/test-db.sqlite"
+
+        ## Path to database migration scripts
+        -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
+)
 
 
 include_directories( ${_oatpp_DIR}/include/oatpp-1.3.0/oatpp )
+include_directories( ${_oatpp_DIR}/include/oatpp-1.3.0/oatpp-sqlite )
+include_directories( ${_oatpp_DIR}/include/oatpp-1.3.0/oatpp-swagger )
+include_directories( src )
+include_directories( 3rdParty )
+include_directories( 3rdParty/sqlite )
 target_link_directories( myapp PRIVATE ${_oatpp_DIR}/lib/oatpp-1.3.0 )
 
 
@@ -26,6 +54,6 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 
 include(CPack)
 
-target_link_libraries (myapp PRIVATE xgetopt oatpp oatpp-test ws2_32 )
+target_link_libraries (myapp PRIVATE xgetopt oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite ws2_32 )
 
 install(TARGETS myapp DESTINATION "bin")
