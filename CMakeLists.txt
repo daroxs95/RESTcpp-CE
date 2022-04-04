@@ -23,9 +23,11 @@ collect( "https://github.com/oatpp/oatpp" "1.3.0" myapp)
 collect_and_find( oatpp-swagger "https://github.com/oatpp/oatpp-swagger" "1.3.0" myapp)
 
 set(OATPP_SQLITE_AMALGAMATION ON)
-#set(OATPP_MODULES_LOCATION EXTERNAL)
 append_var_to_cmake_args( OATPP_SQLITE_AMALGAMATION )
-#append_var_to_cmake_args( OATPP_MODULES_LOCATION )
+if(NOT WIN32)
+  set(OATPP_MODULES_LOCATION EXTERNAL)
+  append_var_to_cmake_args( OATPP_MODULES_LOCATION )
+endif()
 collect_and_find( oatpp-sqlite "https://github.com/oatpp/oatpp-sqlite" "1.3.0" myapp)
 
 

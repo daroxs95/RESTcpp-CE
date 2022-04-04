@@ -13,7 +13,7 @@ Programming exercise for C/C++ Developer candidates at bestvision, bootstrapped 
 - `cmake -B build -S .`
 - `cd build`
 - `cmake --build .`
-- `/myapp`
+- Run `myapp` executable created. It starts REST API server on `localhost:8000`
 
 ## Main endpoints
 
@@ -27,5 +27,8 @@ Programming exercise for C/C++ Developer candidates at bestvision, bootstrapped 
 
 
 
+## TODO
 
+- Make port and ip available to change on app start (cli)
+- Start using ssl
 
