@@ -16,9 +16,12 @@ set (CMAKE_CXX_STANDARD 17)
 add_executable(myapp 
 "src/main.cpp"
 "src/service/UserService.cpp"
+"src/service/UserServiceAddresses.cpp"
+"src/service/UserServicePhones.cpp"
+"src/utils/validators.cpp"
 )
 
-collect( "https://github.com/PotatoBite/xgetopt" "v1.0.0" myapp)
+#collect( "https://github.com/PotatoBite/xgetopt" "v1.0.0" myapp) # NOT NEEDED
 collect( "https://github.com/oatpp/oatpp" "1.3.0" myapp)
 collect( "https://github.com/oatpp/oatpp-swagger" "1.3.0" myapp)
 
@@ -54,6 +57,12 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 
 include(CPack)
 
-target_link_libraries (myapp PRIVATE xgetopt oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite ws2_32 )
+
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    find_package(Threads REQUIRED)
+    target_link_libraries(crud-lib INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
+endif()
+
+target_link_libraries (myapp PRIVATE oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite ws2_32 )
 
 install(TARGETS myapp DESTINATION "bin")

@@ -11,6 +11,9 @@ class PageDto : public oatpp::DTO {
 
   DTO_FIELD(UInt32, offset);
   DTO_FIELD(UInt32, limit);
+  DTO_FIELD(UInt32, minAge);
+  DTO_FIELD(UInt32, maxAge);
+  DTO_FIELD(String, filterText);
   DTO_FIELD(UInt32, count);
   DTO_FIELD(Vector<T>, items);
 

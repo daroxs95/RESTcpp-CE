@@ -11,6 +11,8 @@
 
 #include "AppComponent.hpp"
 #include "controllers/UserController.hpp"
+#include "controllers/AddressController.hpp"
+#include "controllers/PhoneController.hpp"
 
 
 void run() {
@@ -24,6 +26,8 @@ void run() {
   oatpp::web::server::api::Endpoints docEndpoints;
 
   docEndpoints.append(router->addController(UserController::createShared())->getEndpoints());
+  docEndpoints.append(router->addController(AddressController::createShared())->getEndpoints());
+  docEndpoints.append(router->addController(PhoneController::createShared())->getEndpoints());
 
   router->addController(oatpp::swagger::Controller::createShared(docEndpoints));
 
