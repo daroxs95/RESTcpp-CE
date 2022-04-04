@@ -26,7 +26,7 @@ set(OATPP_SQLITE_AMALGAMATION ON)
 set(OATPP_MODULES_LOCATION EXTERNAL)
 append_var_to_cmake_args( OATPP_SQLITE_AMALGAMATION )
 append_var_to_cmake_args( OATPP_MODULES_LOCATION )
-collect( "https://github.com/oatpp/oatpp-sqlite" "1.3.0" myapp)
+collect_and_find( oatpp-sqlite "https://github.com/oatpp/oatpp-sqlite" "1.3.0" myapp)
 
 
 add_definitions(

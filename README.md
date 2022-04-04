@@ -22,7 +22,7 @@ Programming exercise for C/C++ Developer candidates at bestvision, bootstrapped 
 
 ## Notes
 
-- The app was developed in windows, and currently linux build is failing because some dependencies.
+- The app was developed in windows, and currently linux build is failing because some dependencies relations. In any case, try to build more than one time and should do the trick.
 - Due the short time there are no test available. 
 
 
