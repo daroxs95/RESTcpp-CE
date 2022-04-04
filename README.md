@@ -10,11 +10,12 @@ Programming exercise for C/C++ Developer candidates at bestvision, bootstrapped 
 
 ## How to use
 
-- `cmake -B build -S .`
-- `cd build`
-- `cmake --build .`
-- Run `myapp` executable created. It starts REST API server on `localhost:8000`
+- `cmake -S . -B build -DCMAKE_BUILD_TYPE=Release`
+- `cmake --build build --config Release`
+- `cmake --install build --prefix <desired_route>`
+- Run `<desired_route>/bin/myapp` executable created. It starts REST API server on `localhost:8000`
 
+Or by using [precompiled](https://github.com/daroxs95/RESTcpp-CE/releases) binaries.
 ## Main endpoints
 
 - Documentation `/swagger/ui`
@@ -22,7 +23,6 @@ Programming exercise for C/C++ Developer candidates at bestvision, bootstrapped 
 
 ## Notes
 
-- The app was developed in windows, and currently linux build is failing because some dependencies relations. In any case, try to build more than one time and should do the trick.
 - Due the short time there are no test available. 
 
 
