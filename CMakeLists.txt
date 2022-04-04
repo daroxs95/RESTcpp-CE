@@ -68,7 +68,7 @@ include(CPack)
 
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
     find_package(Threads REQUIRED)
-    target_link_libraries(crud-lib INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
+    target_link_libraries(myapp INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
 endif()
 
 #target_link_libraries (myapp PRIVATE ws2_32 )
