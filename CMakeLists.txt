@@ -24,7 +24,7 @@ collect_and_find( oatpp-swagger "https://github.com/oatpp/oatpp-swagger" "1.3.0"
 
 set(OATPP_SQLITE_AMALGAMATION ON)
 append_var_to_cmake_args( OATPP_SQLITE_AMALGAMATION )
-if(NOT WIN32)
+if(NOT MSVC)
   set(OATPP_MODULES_LOCATION EXTERNAL)
   append_var_to_cmake_args( OATPP_MODULES_LOCATION )
 endif()
