@@ -55,6 +55,8 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 
+target_link_libraries (myapp PRIVATE oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite)
+
 # check if we are on Windows
 if( WIN32 )
   target_link_libraries(myapp PRIVATE ws2_32 )
@@ -63,6 +65,5 @@ else()
   target_link_libraries(myapp PRIVATE Threads::Threads ${CMAKE_DL_LIBS})
 endif()
 
-target_link_libraries (myapp PRIVATE oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite )
 
 install(TARGETS myapp DESTINATION "bin")
