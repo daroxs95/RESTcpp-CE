@@ -55,13 +55,12 @@ set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
 
-if(CMAKE_SYSTEM_NAME MATCHES Linux)
-  find_package(Threads REQUIRED)
-  target_link_libraries(myapp INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
-endif()
 # check if we are on Windows
 if( WIN32 )
   target_link_libraries(myapp PRIVATE ws2_32 )
+else()
+  find_package(Threads REQUIRED)
+  target_link_libraries(myapp INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
 endif()
 
 target_link_libraries (myapp PRIVATE oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite )
