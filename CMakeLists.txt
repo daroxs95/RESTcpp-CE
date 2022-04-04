@@ -19,7 +19,6 @@ add_executable(myapp
 "src/utils/validators.cpp"
 )
 
-
 collect_and_find( oatpp "https://github.com/oatpp/oatpp" "1.3.0" myapp )
 collect_and_find( oatpp-swagger "https://github.com/oatpp/oatpp-swagger" "1.3.0" myapp )
 
@@ -37,12 +36,12 @@ endif()
 
 
 add_definitions(
-        -DOATPP_SWAGGER_RES_PATH="${_oatpp_DIR}/include/oatpp-1.3.0/bin/oatpp-swagger/res"
+        -DOATPP_SWAGGER_RES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res"
 
         ## SQLite database file
         -DDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/db.sqlite"
         ## SQLite database test file
-        -DTESTDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/test-db.sqlite"
+        #-DTESTDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/test-db.sqlite"
 
         ## Path to database migration scripts
         -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
