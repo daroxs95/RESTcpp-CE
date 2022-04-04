@@ -24,29 +24,29 @@ add_executable(myapp
 ExternalProject_Add( _oatpp
   SOURCE_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps/oatpp
   GIT_REPOSITORY      "https://github.com/oatpp/oatpp"
-  BINARY_DIR          deps_bin/oatpp
+  BINARY_DIR          ${CMAKE_CURRENT_BINARY_DIR}/deps_bin/oatpp
   GIT_TAG             "1.3.0"
   LOG_CONFIGURE       ON
-  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=deps_install
+  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/deps_install
 )
 
 ExternalProject_Add( _oatpp-swagger
   SOURCE_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps/oatpp-swagger
   GIT_REPOSITORY      "https://github.com/oatpp/oatpp-swagger"
-  BINARY_DIR          deps_bin/oatpp-swagger
+  BINARY_DIR          ${CMAKE_CURRENT_BINARY_DIR}/deps_bin/oatpp-swagger
   GIT_TAG             "1.3.0"
   LOG_CONFIGURE       ON
-  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=deps_install
+  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/deps_install
 )
 
 ExternalProject_Add( _oatpp-sqlite
   SOURCE_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps/oatpp-sqlite
   GIT_REPOSITORY      "https://github.com/oatpp/oatpp-sqlite"
-  BINARY_DIR          deps_bin/oatpp-sqlite
+  BINARY_DIR          ${CMAKE_CURRENT_BINARY_DIR}/deps_bin/oatpp-sqlite
   GIT_TAG             "1.3.0"
   LOG_CONFIGURE       ON
   CMAKE_ARGS          -DOATPP_SQLITE_AMALGAMATION=ON
-  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=deps_install
+  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/deps_install
 )
 add_dependencies( _oatpp-sqlite _oatpp )
 add_dependencies( _oatpp-swagger _oatpp )
