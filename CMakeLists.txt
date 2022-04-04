@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(myproject.myapp VERSION 0.1.0)
 
-include("collector/collector.cmake")#need to be after project()
+include(ExternalProject)
+
 
 include(CTest)
 
@@ -19,17 +20,37 @@ add_executable(myapp
 "src/utils/validators.cpp"
 )
 
-collect( "https://github.com/oatpp/oatpp" "1.3.0" myapp)
-collect_and_find( oatpp-swagger "https://github.com/oatpp/oatpp-swagger" "1.3.0" myapp)
 
-set(OATPP_SQLITE_AMALGAMATION ON)
-append_var_to_cmake_args( OATPP_SQLITE_AMALGAMATION )
-if(NOT MSVC)
-  set(OATPP_MODULES_LOCATION EXTERNAL)
-  append_var_to_cmake_args( OATPP_MODULES_LOCATION )
-endif()
-collect_and_find( oatpp-sqlite "https://github.com/oatpp/oatpp-sqlite" "1.3.0" myapp)
+ExternalProject_Add( _oatpp
+  SOURCE_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps/oatpp
+  GIT_REPOSITORY      "https://github.com/oatpp/oatpp"
+  BINARY_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps_bin/oatpp
+  GIT_TAG             "1.3.0"
+  LOG_CONFIGURE       ON
+  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/deps_install
+)
 
+ExternalProject_Add( _oatpp-swagger
+  SOURCE_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps/oatpp-swagger
+  GIT_REPOSITORY      "https://github.com/oatpp/oatpp-swagger"
+  BINARY_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps_bin/oatpp-swagger
+  GIT_TAG             "1.3.0"
+  LOG_CONFIGURE       ON
+  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/deps_install
+)
+
+ExternalProject_Add( _oatpp-sqlite
+  SOURCE_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps/oatpp-sqlite
+  GIT_REPOSITORY      "https://github.com/oatpp/oatpp-sqlite"
+  BINARY_DIR          ${CMAKE_CURRENT_SOURCE_DIR}/deps_bin/oatpp-sqlite
+  GIT_TAG             "1.3.0"
+  LOG_CONFIGURE       ON
+  CMAKE_ARGS          -DOATPP_SQLITE_AMALGAMATION=ON
+  CMAKE_ARGS          -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_SOURCE_DIR}/deps_install
+)
+add_dependencies( _oatpp-sqlite _oatpp )
+add_dependencies( _oatpp-swagger _oatpp )
+add_dependencies( myapp _oatpp _oatpp-sqlite _oatpp-swagger)
 
 add_definitions(
         -DOATPP_SWAGGER_RES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/res"
@@ -43,14 +64,14 @@ add_definitions(
         -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
 )
 
-
-include_directories( ${_oatpp_DIR}/include/oatpp-1.3.0/oatpp )
-include_directories( ${_oatpp_DIR}/include/oatpp-1.3.0/oatpp-sqlite )
-include_directories( ${_oatpp_DIR}/include/oatpp-1.3.0/oatpp-swagger )
+message("deps_install  " ${CMAKE_CURRENT_SOURCE_DIR}/deps_install )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/deps_install/include/oatpp-1.3.0/oatpp )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/deps_install/include/oatpp-1.3.0/oatpp-sqlite )
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/deps_install/include/oatpp-1.3.0/oatpp-swagger )
 include_directories( src )
 include_directories( 3rdParty )
 include_directories( 3rdParty/sqlite )
-target_link_directories( myapp PRIVATE ${_oatpp_DIR}/lib/oatpp-1.3.0 )
+target_link_directories( myapp PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/deps_install/lib/oatpp-1.3.0 )
 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

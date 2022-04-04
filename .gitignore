@@ -44,6 +44,7 @@ cmake-build-debug/
 /.vs
 
 
-# Collector
-collected_deps
-collections
+# Dependencies 
+deps
+deps_bin
+deps_install
