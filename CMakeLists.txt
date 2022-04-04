@@ -60,7 +60,7 @@ if( WIN32 )
   target_link_libraries(myapp PRIVATE ws2_32 )
 else()
   find_package(Threads REQUIRED)
-  target_link_libraries(myapp INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
+  target_link_libraries(myapp PRIVATE Threads::Threads ${CMAKE_DL_LIBS})
 endif()
 
 target_link_libraries (myapp PRIVATE oatpp-sqlite oatpp-swagger oatpp oatpp-test sqlite )
